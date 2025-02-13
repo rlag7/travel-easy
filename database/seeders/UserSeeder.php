@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         // Create a person for the admin
         $adminPerson = Person::create([
-            'first_name' => 'Admin',
+            'first_name' => 'shane',
             'last_name' => 'User',
             'date_of_birth' => '1990-01-01',
             'is_active' => true,
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         User::create([
             'person_id' => $adminPerson->id,
             'username' => 'admin', // Add this line
-            'name' => 'Admin',
+            'name' => 'kaas',
             'email' => 'admin@laravel.com',
             'password' => Hash::make('123456'),
             'role' => 'admin'
@@ -35,7 +35,7 @@ class UserSeeder extends Seeder
 
         // Create a person for the employee
         $employeePerson = Person::create([
-            'first_name' => 'Employee',
+            'first_name' => 'kees',
             'last_name' => 'User',
             'date_of_birth' => '1990-01-01',
             'is_active' => true,
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
         User::create([
             'person_id' => $employeePerson->id,
             'username' => 'employee', // Add this line
-            'name' => 'Employee',
+            'name' => 'robin',
             'email' => 'employee@laravel.com',
             'password' => Hash::make('123456'),
             'role' => 'employee'
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
         User::create([
             'person_id' => $userPerson->id,
             'username' => 'user', // Add this line
-            'name' => 'User',
+            'name' => 'hamid',
             'email' => 'user@laravel.com',
             'password' => Hash::make('123456'),
             'role' => 'user'

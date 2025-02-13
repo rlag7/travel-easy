@@ -27,6 +27,13 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
 });
 
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit'); // Ensure this exists
+    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+});
+
+
 // Employee routes
 Route::middleware(['auth', 'role:employee'])->group(function () {
     Route::get('/employee/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
