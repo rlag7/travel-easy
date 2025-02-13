@@ -60,4 +60,16 @@ class InvoiceController extends Controller
         // Redirect with success message
         return redirect()->route('invoices.index')->with('success', 'Invoice created successfully!');
     }
+
+    public function destroy($id)
+    {
+        // Find the invoice by ID
+        $invoice = Invoice::findOrFail($id);
+
+        // Delete the invoice
+        $invoice->delete();
+
+        // Redirect back to the invoices index page with a success message
+        return redirect()->route('invoices.index')->with('success', 'Invoice deleted successfully!');
+    }
 }
