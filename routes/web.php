@@ -7,13 +7,23 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Auth;
 
+// Home page (welcome view)
 Route::get('/', function () {
     return view('welcome');
 });
 
-// General user dashboard (without the role-based redirect logic)
+// Redirect users based on their roles if they try to access /dashboard
 Route::get('/dashboard', function () {
-    return view('dashboard'); // General user dashboard
+    // Check the role of the authenticated user and redirect accordingly
+    if (Auth::check()) {
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('admin.dashboard');
+        } elseif (Auth::user()->role == 'employee') {
+            return redirect()->route('employee.dashboard');
+        }
+    }
+
+    return view('dashboard'); // For general users (no role or other types of users)
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // General user profile routes

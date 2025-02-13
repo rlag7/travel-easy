@@ -11,11 +11,12 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-
+    // Define relationship to 'Person' model
     public function person()
     {
         return $this->belongsTo(Person::class, 'person_id');
     }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,5 +52,29 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if the user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if the user is an employee.
+     */
+    public function isEmployee(): bool
+    {
+        return $this->role === 'employee';
+    }
+
+    /**
+     * Check if the user is a general user.
+     */
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
     }
 }
