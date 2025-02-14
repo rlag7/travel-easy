@@ -10,8 +10,9 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        $users = User::select('name', 'email', 'role', 'is_active', 'created_at')->get();
+        $users = User::whereIn('role', ['employee', 'user'])->get();
         return view('admin.dashboard', compact('users'));
+
     }
 
 
