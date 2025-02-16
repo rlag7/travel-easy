@@ -20,7 +20,7 @@
                         <a href="{{ route('communications.create') }}" class="text-blue-500 inline-block">Create New Message</a>
                     </div>
 
-                    @if($communications->isEmpty())
+                    @if(false)
                         <div class="bg-yellow-500 text-white p-4 rounded-md">
                             Er zijn momenteel geen berichten beschikbaar.
                         </div>
@@ -35,14 +35,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($communications as $communication)
+                            @foreach ($employees as $employee)
                                 <tr>
-                                    <td class="border px-4 py-2">{{ $communication->title }}</td>
-                                    <td class="border px-4 py-2">{{ $communication->sent_at->format('d/m/Y') }}</td>
-                                    <td class="border px-4 py-2">{{ $communication->employee ? $communication->employee->name : 'Onbekend' }}</td>
+                                    <td class="border px-4 py-2">{{ $employee->communication->title }}</td>
+                                    <td class="border px-4 py-2">{{ $employee->communication->sent_at->format('d/m/Y') }}</td>
+                                    <td class="border px-4 py-2">{{ $employee->communication->employee}}</td>
                                     <td class="border px-4 py-2">
-                                        <a href="{{ route('communications.edit', $communication) }}" class="text-blue-500">Edit</a>
-                                        <form action="{{ route('communications.destroy', $communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this message?')">
+                                        <a href="{{ route('communications.edit', $employee->communication) }}" class="text-blue-500">Edit</a>
+                                        <form action="{{ route('communications.destroy', $employee->communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this message?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-500">Delete</button>

@@ -3,14 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Communication;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 
 class CommunicationController extends Controller
 {
     public function index()
     {
+        $employees = Employee::with(['communications', 'person'])->get();
+        foreach ($employees as $employee) {
+            dump($employee->communications[0]->title);
+        }
+
         return view('employee.communications.index', [
-            'communications' => Communication::with('employee')->get()
+            'employees' => Employee::with(['communications', 'person'])->get()
         ]);
     }
 

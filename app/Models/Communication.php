@@ -19,7 +19,7 @@ class Communication extends Model
     ];
 
     protected $casts = [
-        'sent_at' => 'datetime',  // This ensures 'sent_at' is treated as a DateTime object
+        'sent_at' => 'datetime',
     ];
 
     public function employee()
