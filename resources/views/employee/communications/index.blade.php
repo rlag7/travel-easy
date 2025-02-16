@@ -39,7 +39,7 @@
                                 <tr>
                                     <td class="border px-4 py-2">{{ $communication->title }}</td>
                                     <td class="border px-4 py-2">{{ $communication->sent_at->format('d/m/Y') }}</td>
-                                    <td class="border px-4 py-2">{{ $communication->employee->name }}</td>
+                                    <td class="border px-4 py-2">{{ $communication->employee ? $communication->employee->name : 'Onbekend' }}</td>
                                     <td class="border px-4 py-2">
                                         <a href="{{ route('communications.edit', $communication) }}" class="text-blue-500">Edit</a>
                                         <form action="{{ route('communications.destroy', $communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this message?')">

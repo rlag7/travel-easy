@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CommunicationController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -40,6 +41,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
     Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
     Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+
+    // Customers CRUD routes
+    Route::get('/admin/customers', [CustomerController::class, 'index'])->name('admin.customers.index');
+    Route::get('/admin/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('admin.customers.edit');
+    Route::put('/admin/customers/{customer}', [CustomerController::class, 'update'])->name('admin.customers.update');
+    Route::get('/admin/customers/create', [CustomerController::class, 'create'])->name('admin.customers.create');
+    Route::post('/admin/customers', [CustomerController::class, 'store'])->name('admin.customers.store');
+    Route::delete('/admin/customers/{customer}', [CustomerController::class, 'destroy'])->name('admin.customers.destroy');
 });
 
 // Employee routes
