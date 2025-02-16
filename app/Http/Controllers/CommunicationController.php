@@ -7,68 +7,68 @@ use Illuminate\Http\Request;
 
 class CommunicationController extends Controller
 {
-    // Display the list of communications
     public function index()
     {
-        $communications = Communication::where('employee_id', auth()->id())->get();
-        return view('employee.communications.index', compact('communications'));
+        return view('employee.communications.index', [
+            'communications' => Communication::with('employee')->get()
+        ]);
     }
 
-    // Show the form to create a new communication
     public function create()
     {
         return view('employee.communications.create');
     }
 
-    // Store a new communication
     public function store(Request $request)
     {
         $request->validate([
-            'message' => 'required',
-            'remarks' => 'nullable',
-            'sent_at' => 'required|date',
+            'message' => 'required|string|max:255',
+            'remarks' => 'nullable|string|max:255',
         ]);
 
         Communication::create([
-            'employee_id' => auth()->id(),
+            'customer_id' => 1, // Replace with actual customer_id
+            'employee_id' => 1, // Replace with actual employee_id
             'message' => $request->message,
+            'sent_at' => now(),
+            'is_active' => true,
             'remarks' => $request->remarks,
-            'sent_at' => $request->sent_at,
-            'is_active' => true, // Default to active
         ]);
 
-        return redirect()->route('communications.index')->with('success', 'Communication created successfully.');
+        session()->flash('success', 'Bericht succesvol toegevoegd');
+        return redirect()->route('communications.index');
     }
 
-    // Show the form to edit a communication
-    public function edit(Communication $communication)
+    public function edit(string $id)
     {
+        $communication = Communication::findOrFail($id);
         return view('employee.communications.edit', compact('communication'));
     }
 
-    // Update an existing communication
-    public function update(Request $request, Communication $communication)
+    public function update(Request $request, string $id)
     {
+        $communication = Communication::findOrFail($id);
+
         $request->validate([
-            'message' => 'required',
-            'remarks' => 'nullable',
-            'sent_at' => 'required|date',
+            'message' => 'required|string|max:255',
+            'remarks' => 'nullable|string|max:255',
         ]);
 
         $communication->update([
             'message' => $request->message,
             'remarks' => $request->remarks,
-            'sent_at' => $request->sent_at,
-            'is_active' => true, // Update status
         ]);
 
-        return redirect()->route('communications.index')->with('success', 'Communication updated successfully.');
+        session()->flash('success', 'Bericht succesvol bijgewerkt');
+        return redirect()->route('communications.index');
     }
 
-    // Delete a communication
-    public function destroy(Communication $communication)
+    public function destroy(string $id)
     {
+        $communication = Communication::findOrFail($id);
         $communication->delete();
-        return redirect()->route('communications.index')->with('success', 'Communication deleted successfully.');
+
+        session()->flash('success', 'Bericht succesvol verwijderd');
+        return redirect()->route('communications.index');
     }
 }

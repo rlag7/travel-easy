@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Communication;
 use App\Models\Employee;
 use Illuminate\Database\Seeder;
@@ -15,15 +17,13 @@ class CommunicationSeeder extends Seeder
         Communication::create([
             'title' => 'Message 1',
             'message' => 'This is the first message content.',
+            'sent_at' => now(),
+            'is_active' => true,
             'remarks' => 'First remarks.',
-            'employee_id' => $employee->id, // Link it to the first employee
+            'employee_id' => 1,
+            'customer_id' => 1,
         ]);
 
-        Communication::create([
-            'title' => 'Message 2',
-            'message' => 'This is the second message content.',
-            'remarks' => 'Second remarks.',
-            'employee_id' => $employee->id,
-        ]);
     }
 }
+

@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
-            $table->text('message');
+            $table->string('title', 32);
+            $table->string('message', 255);
             $table->dateTime('sent_at');
             $table->boolean('is_active')->default(true);
-            $table->text('remarks')->nullable();
+            $table->string('remarks', 255)->nullable();
             $table->timestamps();
         });
     }

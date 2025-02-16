@@ -1,4 +1,3 @@
-<!-- resources/views/employee/communications/create.blade.php -->
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -12,6 +11,14 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form action="{{ route('communications.store') }}" method="POST">
                         @csrf
+                        <div class="mb-4">
+                            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                            <input type="text" id="title" name="title" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                            @error('title')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <div class="mb-4">
                             <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
                             <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>{{ old('message') }}</textarea>

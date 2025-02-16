@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Bericht Overzicht') }}
+            {{ __('Communications') }}
         </h2>
     </x-slot>
 
@@ -9,23 +9,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-lg font-semibold mb-4">Berichten</h3>
-                        <a href="{{ route('communications.create') }}" class="text-blue-500 mb-4 inline-block">
-                            Create New Message
-                        </a>
-                    </div>
-
-                    <!-- Display success message if exists -->
-                    @if(session('success'))
-                        <div class="bg-green-500 text-white p-4 mb-4 rounded-md">
+                    @if (session('success'))
+                        <div id="success-message" class="bg-green-500 text-white p-4 rounded-md mb-4">
                             {{ session('success') }}
                         </div>
                     @endif
 
-                    <!-- Check if there are any communications -->
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold">Berichten</h3>
+                        <a href="{{ route('communications.create') }}" class="text-blue-500 inline-block">Create New Message</a>
+                    </div>
+
                     @if($communications->isEmpty())
-                        <div class="bg-yellow-500 text-white p-4 mb-4 rounded-md">
+                        <div class="bg-yellow-500 text-white p-4 rounded-md">
                             Er zijn momenteel geen berichten beschikbaar.
                         </div>
                     @else
@@ -61,4 +57,15 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.onload = function() {
+            const successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                setTimeout(function() {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            }
+        };
+    </script>
 </x-app-layout>
