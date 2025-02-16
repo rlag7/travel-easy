@@ -9,11 +9,6 @@ class Person extends Model
 {
     use HasFactory;
 
-
-    public function user()
-    {
-        return $this->hasOne(User::class, 'person_id');
-    }
     /**
      * The attributes that are mass assignable.
      *
@@ -28,4 +23,15 @@ class Person extends Model
         'is_active',
         'remarks',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'person_id');
+    }
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'person_id');
+    }
+
 }
