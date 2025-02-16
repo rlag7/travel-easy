@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -43,14 +44,22 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 // Employee routes
 Route::middleware(['auth', 'role:employee'])->group(function () {
+    // Route for Employee Dashboard
     Route::get('/employee/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
-    Route::get('/employee/profile', [EmployeeController::class, 'profile'])->name('employee.profile');
 
-    // Invoice routes (only employees can access these)
+    // Communication (Messages) CRUD routes
+    Route::get('/employee/communications', [CommunicationController::class, 'index'])->name('communications.index');
+    Route::get('/employee/communications/create', [CommunicationController::class, 'create'])->name('communications.create');
+    Route::post('/employee/communications', [CommunicationController::class, 'store'])->name('communications.store');
+    Route::get('/employee/communications/{communication}/edit', [CommunicationController::class, 'edit'])->name('communications.edit');
+    Route::put('/employee/communications/{communication}', [CommunicationController::class, 'update'])->name('communications.update');
+    Route::delete('/employee/communications/{communication}', [CommunicationController::class, 'destroy'])->name('communications.destroy');
+
+    // Other routes for invoices
     Route::get('/employee/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
     Route::get('/employee/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
     Route::post('/employee/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
-    Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
+    Route::delete('/employee/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
 });
 
 require __DIR__.'/auth.php';

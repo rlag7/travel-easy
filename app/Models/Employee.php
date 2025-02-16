@@ -31,4 +31,9 @@ class Employee extends Model
         return $this->belongsTo(Person::class);
     }
 
+    public function communications()
+    {
+        return $this->hasMany(Communication::class);
+    }
+
 }

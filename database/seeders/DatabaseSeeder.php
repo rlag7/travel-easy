@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use CommunicationSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             TripSeeder::class,
             BookingSeeder::class,
             UserSeeder::class,
+            CommunicationSeeder::class,
         ]);
     }
 }
