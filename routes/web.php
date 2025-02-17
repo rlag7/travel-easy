@@ -35,7 +35,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('admin.users');
 
     // Customer Management Routes
-    Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers');
+    Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers.index');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('admin.customers.create');
     Route::post('/customers', [CustomerController::class, 'store'])->name('admin.customers.store');
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('admin.customers.edit');
