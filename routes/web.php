@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommunicationController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
@@ -16,7 +17,6 @@ Route::get('/', function () {
 
 // Redirect users based on their roles if they try to access /dashboard
 Route::get('/dashboard', function () {
-    // Check the role of the authenticated user and redirect accordingly
     if (Auth::check()) {
         if (Auth::user()->role == 'admin') {
             return redirect()->route('admin.dashboard');
@@ -24,9 +24,24 @@ Route::get('/dashboard', function () {
             return redirect()->route('employee.dashboard');
         }
     }
-
-    return view('dashboard'); // For general users (no role or other types of users)
+    return view('dashboard'); // For general users
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Admin Routes
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    // User Management Routes (Only List Users)
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+
+    // Customer Management Routes
+    Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers.index');
+    Route::get('/customers/create', [CustomerController::class, 'create'])->name('admin.customers.create');
+    Route::post('/customers', [CustomerController::class, 'store'])->name('admin.customers.store');
+    Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('admin.customers.edit');
+    Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('admin.customers.update');
+    Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('admin.customers.destroy');
+});
 
 // General user profile routes
 Route::middleware('auth')->group(function () {
@@ -35,40 +50,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Admin routes
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('/admin/profile', [AdminController::class, 'profile'])->name('admin.profile');
-    Route::get('/admin/users/{id}/edit', [AdminController::class, 'edit'])->name('admin.edit');
-    Route::delete('/admin/users/{id}', [AdminController::class, 'destroy'])->name('admin.destroy');
+// Employee Routes
+Route::middleware(['auth', 'role:employee'])->prefix('employee')->group(function () {
+    Route::get('/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
 
-    // Customers CRUD routes
-    Route::get('/admin/customers', [CustomerController::class, 'index'])->name('admin.customers.index');
-    Route::get('/admin/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('admin.customers.edit');
-    Route::put('/admin/customers/{customer}', [CustomerController::class, 'update'])->name('admin.customers.update');
-    Route::get('/admin/customers/create', [CustomerController::class, 'create'])->name('admin.customers.create');
-    Route::post('/admin/customers', [CustomerController::class, 'store'])->name('admin.customers.store');
-    Route::delete('/admin/customers/{customer}', [CustomerController::class, 'destroy'])->name('admin.customers.destroy');
-});
+    // Communication Routes
+    Route::resource('/communications', CommunicationController::class)->except(['show']);
 
-// Employee routes
-Route::middleware(['auth', 'role:employee'])->group(function () {
-    // Route for Employee Dashboard
-    Route::get('/employee/dashboard', [EmployeeController::class, 'dashboard'])->name('employee.dashboard');
-
-    // Communication (Messages) CRUD routes
-    Route::get('/employee/communications', [CommunicationController::class, 'index'])->name('communications.index');
-    Route::get('/employee/communications/create', [CommunicationController::class, 'create'])->name('communications.create');
-    Route::post('/employee/communications', [CommunicationController::class, 'store'])->name('communications.store');
-    Route::get('/employee/communications/{communication}/edit', [CommunicationController::class, 'edit'])->name('communications.edit');
-    Route::put('/employee/communications/{communication}', [CommunicationController::class, 'update'])->name('communications.update');
-    Route::delete('/employee/communications/{communication}', [CommunicationController::class, 'destroy'])->name('communications.destroy');
-
-    // Other routes for invoices
-    Route::get('/employee/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
-    Route::get('/employee/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
-    Route::post('/employee/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
-    Route::delete('/employee/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
+    // Invoice Routes
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoices.index');
+    Route::get('/invoices/create', [InvoiceController::class, 'create'])->name('invoices.create');
+    Route::post('/invoices', [InvoiceController::class, 'store'])->name('invoices.store');
+    Route::delete('/invoices/{id}', [InvoiceController::class, 'destroy'])->name('invoices.destroy');
 });
 
 require __DIR__.'/auth.php';
