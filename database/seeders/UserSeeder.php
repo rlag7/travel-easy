@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         // Create the admin user
         User::create([
             'person_id' => $adminPerson->id,
-            'username' => 'admin', // Add this line
+            'role' => 'admin', // Add this line
             'name' => 'kaas',
             'email' => 'admin@laravel.com',
             'password' => Hash::make('123456'),
@@ -44,7 +44,7 @@ class UserSeeder extends Seeder
         // Create the employee user
         User::create([
             'person_id' => $employeePerson->id,
-            'username' => 'employee', // Add this line
+            'role' => 'employee', // Add this line
             'name' => 'robin',
             'email' => 'employee@laravel.com',
             'password' => Hash::make('123456'),
@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
         // Create the regular user
         User::create([
             'person_id' => $userPerson->id,
-            'username' => 'user', // Add this line
+            'role' => 'user', // Add this line
             'name' => 'hamid',
             'email' => 'user@laravel.com',
             'password' => Hash::make('123456'),

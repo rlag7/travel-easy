@@ -17,6 +17,10 @@ class User extends Authenticatable
         return $this->belongsTo(Person::class, 'person_id');
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->person ? $this->person->first_name . ' ' . ($this->person->middle_name ? $this->person->middle_name . ' ' : '') . $this->person->last_name : 'N/A';
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -24,6 +28,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'role',

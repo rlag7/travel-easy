@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Person; // Import the Person model
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,22 +30,48 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+        // Define validation rules for form inputs
+        $validated = $request->validate([
+            'first_name' => ['required', 'string', 'max:255'],
+            'middle_name' => ['nullable', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            'date_of_birth' => ['required', 'date'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        try {
+            // Create a new person record
+            $person = Person::create([
+                'first_name' => $validated['first_name'],
+                'middle_name' => $validated['middle_name'],
+                'last_name' => $validated['last_name'],
+                'phone' => $validated['phone'],
+                'date_of_birth' => $validated['date_of_birth'],
+                'is_active' => true, // Default value
+            ]);
 
-        event(new Registered($user));
+            // Create a new user record
+            $user = User::create([
+                'person_id' => $person->id,
+                'name' => $validated['first_name'] . ' ' . $validated['last_name'], // Combine first and last name
+                'email' => $validated['email'],
+                'username' => strtolower($validated['first_name']) . '_' . uniqid(), // Generate a unique username
+                'password' => Hash::make($validated['password']),
+            ]);
 
-        Auth::login($user);
+            // Trigger Registered event
+            event(new Registered($user));
 
-        return redirect(route('dashboard', absolute: false));
+            // Log in the user immediately after registration
+            Auth::login($user);
+
+            // Redirect to the dashboard
+            return redirect(route('dashboard', absolute: false));
+        } catch (\Exception $e) {
+            // Handle any exceptions
+            return back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 }
