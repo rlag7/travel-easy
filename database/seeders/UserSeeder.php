@@ -30,13 +30,12 @@ class UserSeeder extends Seeder
             'name' => 'kaas',
             'email' => 'admin@laravel.com',
             'password' => Hash::make('123456'),
-            'role' => 'admin'
         ]);
 
         // Create a person for the employee
         $employeePerson = Person::create([
             'first_name' => 'kees',
-            'last_name' => 'User',
+            'last_name' => 'chigga',
             'date_of_birth' => '1990-01-01',
             'is_active' => true,
         ]);
@@ -48,13 +47,12 @@ class UserSeeder extends Seeder
             'name' => 'robin',
             'email' => 'employee@laravel.com',
             'password' => Hash::make('123456'),
-            'role' => 'employee'
         ]);
 
         // Create a person for the regular user
         $userPerson = Person::create([
             'first_name' => 'Regular',
-            'last_name' => 'User',
+            'last_name' => 'monky',
             'date_of_birth' => '1990-01-01',
             'is_active' => true,
         ]);
@@ -66,7 +64,6 @@ class UserSeeder extends Seeder
             'name' => 'hamid',
             'email' => 'user@laravel.com',
             'password' => Hash::make('123456'),
-            'role' => 'user'
         ]);
 
         dd('Seeding completed'); // Debugging line
