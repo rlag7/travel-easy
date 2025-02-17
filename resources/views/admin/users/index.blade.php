@@ -13,7 +13,7 @@
                     <!-- Search Filter (on the left) -->
                     <div class="mb-4 flex justify-between items-center">
                         <div class="w-1/3">
-                            <input type="text" id="searchInput" placeholder="Search users..." class="w-full px-4 py-2 border rounded-md">
+                            <input type="text" id="searchInput" placeholder="Search users by last name..." class="w-full px-4 py-2 border rounded-md">
                         </div>
 
                         <!-- Add Account Button (on the right) -->
@@ -72,26 +72,45 @@
         </div>
     </div>
 
-    <!-- JavaScript to handle the search/filter functionality -->
     <script>
-        // Get the search input element and table rows
         document.getElementById("searchInput").addEventListener("input", function() {
             let filter = this.value.toLowerCase();
-            let tableRows = document.querySelectorAll("#userTable tbody tr");
+            let tableBody = document.querySelector("#userTable tbody");
+            let tableRows = tableBody.querySelectorAll("tr");
+
+            let matchFound = false;
 
             tableRows.forEach(row => {
-                let cells = row.getElementsByTagName("td");
-                let name = cells[0].textContent.toLowerCase();
-                let email = cells[1].textContent.toLowerCase();
-                let role = cells[2].textContent.toLowerCase();
+                let nameCell = row.getElementsByTagName("td")[0]; // Get the Full Name column
+                let fullName = nameCell.textContent.trim(); // Get full name text
 
-                // Check if any cell matches the filter text
-                if (name.includes(filter) || email.includes(filter) || role.includes(filter)) {
+                // Extract the last name (assuming names are in "First Middle Last" format)
+                let nameParts = fullName.split(" ");
+                let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1].toLowerCase() : fullName.toLowerCase();
+
+                // Check if the last name matches the filter text
+                if (lastName.includes(filter)) {
                     row.style.display = ""; // Show the row if match
+                    matchFound = true;
                 } else {
                     row.style.display = "none"; // Hide the row if no match
                 }
             });
+
+            // Remove any existing "no results" row
+            let noResultRow = document.getElementById("noResultRow");
+            if (noResultRow) {
+                noResultRow.remove();
+            }
+
+            // If no match is found, show a message row
+            if (!matchFound) {
+                let newRow = document.createElement("tr");
+                newRow.id = "noResultRow";
+                newRow.innerHTML = `<td colspan="6" class="border px-4 py-2 text-center text-gray-500">No user with that last name found</td>`;
+                tableBody.appendChild(newRow);
+            }
         });
     </script>
+
 </x-app-layout>
