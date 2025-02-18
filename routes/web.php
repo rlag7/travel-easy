@@ -10,6 +10,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\DealController;
+use App\Http\Controllers\BookingController;
 
 // Definieer de home route
 Route::get('/', function () {
@@ -34,6 +35,8 @@ Route::get('/deals', [DealController::class, 'index'])->name('deals');
 
 
 
+
+
 // Redirect users based on their roles if they try to access /dashboard
 Route::get('/dashboard', function () {
     if (Auth::check()) {
@@ -50,8 +53,11 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
+    Route::resource('/bookings', BookingController::class);
+    
+
     // User Management Routes (Only List Users)
-    Route::get('/users', [UserController::class, 'index'])->name('admin.users');
+    //Route::get('/users', [UserController::class, 'index'])->name('admin.users');
 
     // Customer Management Routes
     Route::get('/customers', [CustomerController::class, 'index'])->name('admin.customers.index');

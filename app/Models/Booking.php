@@ -22,6 +22,18 @@ class Booking extends Model
         'is_active',
     ];
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function trip()
+    {
+        return $this->belongsTo(Trip::class);
+    }
+
+    
+
     public function invoices()
     {
         return $this->hasMany(Invoice::class);
