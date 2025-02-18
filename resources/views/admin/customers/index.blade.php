@@ -9,7 +9,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-
                     @if (session('success'))
                         <div id="success-message" class="bg-green-500 text-white p-4 rounded-md mb-4">
                             {{ session('success') }}
@@ -18,16 +17,9 @@
 
                     <div class="flex justify-between items-center mb-4">
                         <h3 class="text-lg font-semibold">Klantenlijst</h3>
-                        <a href="{{ route('admin.customers.create') }}" class="text-blue-500">Nieuwe klant toevoegen</a>
+                        <a href="{{ route('admin.customers.create') }}" class="text-blue-500 inline-block">Nieuwe klant toevoegen</a>
                     </div>
 
-                    <!-- Zoekformulier -->
-                    <form method="GET" action="{{ route('admin.customers.index') }}" class="mb-4 flex space-x-2">
-                        <input type="text" name="search" placeholder="Zoek op achternaam" class="p-2 border border-gray-300 rounded-md" value="{{ request('search') }}">
-                        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-md">Zoeken</button>
-                    </form>
-
-                    <!-- Geen klanten beschikbaar -->
                     @if($customers->isEmpty())
                         <div class="bg-yellow-500 text-white p-4 rounded-md">
                             Er zijn momenteel geen klanten beschikbaar.
@@ -37,8 +29,8 @@
                             <thead>
                             <tr>
                                 <th class="border px-4 py-2">Naam</th>
-                                <th class="border px-4 py-2">E-mail</th>
-                                <th class="border px-4 py-2">Telefoonnummer</th>
+                                <th class="border px-4 py-2">Relatienummer</th>
+                                <th class="border px-4 py-2">Status</th>
                                 <th class="border px-4 py-2">Acties</th>
                             </tr>
                             </thead>
@@ -46,8 +38,8 @@
                             @foreach ($customers as $customer)
                                 <tr>
                                     <td class="border px-4 py-2">{{ $customer->person->name ?? 'Onbekend' }}</td>
-                                    <td class="border px-4 py-2">{{ $customer->person->email ?? 'Geen e-mail' }}</td>
-                                    <td class="border px-4 py-2">{{ $customer->person->phone ?? 'Geen telefoonnummer' }}</td>
+                                    <td class="border px-4 py-2">{{ $customer->relation_number }}</td>
+                                    <td class="border px-4 py-2">{{ $customer->is_active ? 'Actief' : 'Inactief' }}</td>
                                     <td class="border px-4 py-2">
                                         <a href="{{ route('admin.customers.edit', $customer) }}" class="text-blue-500">Bewerken</a>
                                         <form action="{{ route('admin.customers.destroy', $customer) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Weet je zeker dat je deze klant wilt verwijderen?')">
@@ -60,13 +52,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                    @endif
-
-                    <!-- Geen resultaten gevonden melding -->
-                    @if(request('search') && $customers->isEmpty())
-                        <div class="bg-red-500 text-white p-4 rounded-md mt-4">
-                            Geen klant gevonden met deze achternaam.
-                        </div>
                     @endif
                 </div>
             </div>

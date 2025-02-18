@@ -11,7 +11,6 @@ class CustomerController extends Controller
     {
         $query = Customer::with('person');
 
-        // Search by lastname if a search query is provided
         if ($request->has('search')) {
             $query->whereHas('person', function ($q) use ($request) {
                 $q->where('lastname', 'like', '%' . $request->search . '%');
