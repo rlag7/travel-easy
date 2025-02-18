@@ -8,11 +8,30 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\DealController;
 
-// Home page (welcome view)
+// Definieer de home route
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->name('home');
+
+// Definieer de andere routes
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+Route::get('/deals', function () {
+    return view('deals');
+})->name('deals');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+Route::get('/deals', [DealController::class, 'index'])->name('deals');
+
+
+
 
 // Redirect users based on their roles if they try to access /dashboard
 Route::get('/dashboard', function () {
