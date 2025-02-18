@@ -26,4 +26,10 @@ class Communication extends Model
     {
         return $this->belongsTo(Employee::class, 'employee_id');
     }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
 }
