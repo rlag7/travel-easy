@@ -10,11 +10,6 @@ class CommunicationController extends Controller
 {
     public function index()
     {
-        $employees = Employee::with(['communications', 'person'])->get();
-        foreach ($employees as $employee) {
-            dump($employee->communications[0]->title);
-        }
-
         return view('employee.communications.index', [
             'employees' => Employee::with(['communications', 'person'])->get()
         ]);

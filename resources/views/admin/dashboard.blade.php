@@ -15,7 +15,7 @@
                         <a href="{{ route('admin.users') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                             Manage Users
                         </a>
-                        <a href="{{ route('admin.customers') }}" class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
+                        <a href="{{ route('admin.customers.index') }}" class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
                             Manage Customers
                         </a>
                     </div>

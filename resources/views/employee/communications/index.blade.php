@@ -15,17 +15,27 @@
                         </div>
                     @endif
 
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold">Berichten</h3>
-                        <a href="{{ route('communications.create') }}" class="text-blue-500 inline-block">Create New Message</a>
+                    <div class="mb-4 flex justify-between items-center">
+                        <div class="w-1/3">
+                            <input type="text" id="searchInput" placeholder="Zoek op afzender..." class="w-full px-4 py-2 border rounded-md">
+                        </div>
+                        <a href="{{ route('communications.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                            Nieuw bericht toevoegen
+                        </a>
                     </div>
 
-                    @if(false)
-                        <div class="bg-yellow-500 text-white p-4 rounded-md">
-                            Er zijn momenteel geen berichten beschikbaar.
-                        </div>
-                    @else
-                        <table class="w-full text-left border-collapse">
+                    <h3 class="text-lg font-semibold mb-4">Berichtenlijst</h3>
+
+                    @php
+                        // Tel alle communicatie-items
+                        $communicationCount = 0;
+                        foreach ($employees as $employee) {
+                            $communicationCount += $employee->communications->count();
+                        }
+                    @endphp
+
+                    @if ($communicationCount > 0)
+                        <table class="w-full text-left border-collapse" id="communicationsTable">
                             <thead>
                             <tr>
                                 <th class="border px-4 py-2">Titel</th>
@@ -36,22 +46,30 @@
                             </thead>
                             <tbody>
                             @foreach ($employees as $employee)
-                                <tr>
-                                    <td class="border px-4 py-2">{{ $employee->communication->title }}</td>
-                                    <td class="border px-4 py-2">{{ $employee->communication->sent_at->format('d/m/Y') }}</td>
-                                    <td class="border px-4 py-2">{{ $employee->communication->employee}}</td>
-                                    <td class="border px-4 py-2">
-                                        <a href="{{ route('communications.edit', $employee->communication) }}" class="text-blue-500">Edit</a>
-                                        <form action="{{ route('communications.destroy', $employee->communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this message?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-500">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @foreach ($employee->communications as $communication)
+                                    <tr>
+                                        <td class="border px-4 py-2">{{ $communication->message }}</td>
+                                        <td class="border px-4 py-2">{{ $communication->sent_at->format('d/m/Y') }}</td>
+                                        <td class="border px-4 py-2">
+                                            {{ optional($communication->customer->person)->first_name }}
+                                            {{ optional($communication->customer->person)->middle_name }}
+                                            {{ optional($communication->customer->person)->last_name }}
+                                        </td>
+                                        <td class="border px-4 py-2">
+                                            <a href="{{ route('communications.edit', $communication) }}" class="text-blue-500">Bewerken</a>
+                                            <form action="{{ route('communications.destroy', $communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Weet je zeker dat je dit bericht wilt verwijderen?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500">Verwijderen</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                             </tbody>
                         </table>
+                    @else
+                        <p class="text-gray-500">Er zijn momenteel geen berichten beschikbaar.</p>
                     @endif
                 </div>
             </div>
@@ -59,6 +77,35 @@
     </div>
 
     <script>
+        document.getElementById("searchInput").addEventListener("input", function() {
+            let filter = this.value.toLowerCase();
+            let tableRows = document.querySelectorAll("#communicationsTable tbody tr");
+
+            let found = false;
+            tableRows.forEach(row => {
+                let sender = row.getElementsByTagName("td")[2].textContent.toLowerCase(); // Derde kolom bevat afzender
+                if (sender.includes(filter)) {
+                    row.style.display = "";
+                    found = true;
+                } else {
+                    row.style.display = "none";
+                }
+            });
+
+            let noResultsMessage = document.getElementById("noResultsMessage");
+            if (!found) {
+                if (!noResultsMessage) {
+                    noResultsMessage = document.createElement("div");
+                    noResultsMessage.id = "noResultsMessage";
+                    noResultsMessage.className = "bg-red-500 text-white p-4 rounded-md mt-4";
+                    noResultsMessage.textContent = "Geen berichten gevonden met deze afzender.";
+                    document.querySelector("#communicationsTable").insertAdjacentElement("afterend", noResultsMessage);
+                }
+            } else if (noResultsMessage) {
+                noResultsMessage.remove();
+            }
+        });
+
         window.onload = function() {
             const successMessage = document.getElementById('success-message');
             if (successMessage) {
