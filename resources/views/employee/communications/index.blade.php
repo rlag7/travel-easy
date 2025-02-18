@@ -36,19 +36,25 @@
                             </thead>
                             <tbody>
                             @foreach ($employees as $employee)
-                                <tr>
-                                    <td class="border px-4 py-2">{{ $employee->communication->title }}</td>
-                                    <td class="border px-4 py-2">{{ $employee->communication->sent_at->format('d/m/Y') }}</td>
-                                    <td class="border px-4 py-2">{{ $employee->communication->employee}}</td>
-                                    <td class="border px-4 py-2">
-                                        <a href="{{ route('communications.edit', $employee->communication) }}" class="text-blue-500">Edit</a>
-                                        <form action="{{ route('communications.destroy', $employee->communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this message?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-red-500">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                                @foreach ($employee->communications as $communication)
+                                    <tr>
+                                        <td class="border px-4 py-2">{{ $communication->message }}</td>
+                                        <td class="border px-4 py-2">{{ $communication->sent_at->format('d/m/Y') }}</td>
+                                        <td class="border px-4 py-2">
+                                            {{ optional($communication->customer->person)->first_name }}
+                                            {{ optional($communication->customer->person)->middle_name }}
+                                            {{ optional($communication->customer->person)->last_name }}
+                                        </td>
+                                        <td class="border px-4 py-2">
+                                            <a href="{{ route('communications.edit', $communication) }}" class="text-blue-500">Edit</a>
+                                            <form action="{{ route('communications.destroy', $communication) }}" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this message?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                             </tbody>
                         </table>
