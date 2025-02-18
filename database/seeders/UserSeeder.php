@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         // Create a person for the admin
         $adminPerson = Person::create([
             'first_name' => 'shane',
-            'last_name' => 'User',
+            'last_name' => 'hamid',
             'date_of_birth' => '1990-01-01',
             'is_active' => true,
         ]);
@@ -51,8 +51,8 @@ class UserSeeder extends Seeder
 
         // Create a person for the regular user
         $userPerson = Person::create([
-            'first_name' => 'Regular',
-            'last_name' => 'monky',
+            'first_name' => 'kees',
+            'last_name' => 'kaas',
             'date_of_birth' => '1990-01-01',
             'is_active' => true,
         ]);

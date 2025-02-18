@@ -24,8 +24,12 @@
 
                     <h3 class="text-lg font-semibold mb-4">User Accounts</h3>
 
-                    @if ($users->isEmpty())
-                        <p class="text-gray-500">No Users Found</p>
+                    @php
+                        $filteredUsers = $users->filter(fn($user) => in_array($user->role, ['user', 'employee']));
+                    @endphp
+
+                    @if ($filteredUsers->isEmpty())
+                        <p class="text-gray-500 text-2xl font-bold text-center">No Accounts Found</p>
                     @else
                         <table class="w-full text-left border-collapse" id="userTable">
                             <thead>
@@ -39,12 +43,11 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($users as $user)
+                            @foreach ($filteredUsers as $user)
                                 <tr>
                                     <td class="border px-4 py-2">
                                         {{ $user->person ? $user->full_name : 'No Person Data' }}
                                     </td>
-
                                     <td class="border px-4 py-2">{{ $user->email }}</td>
                                     <td class="border px-4 py-2 capitalize">{{ $user->role }}</td>
                                     <td class="border px-4 py-2">
@@ -54,7 +57,6 @@
                                     <td class="border px-4 py-2">
                                         <!-- Edit Button -->
                                         <a href="#" class="text-blue-500 mr-2">Edit</a>
-
                                         <!-- Delete Button -->
                                         <form action="#" method="POST" class="inline-block ml-2" onsubmit="return confirm('Are you sure you want to delete this user?')">
                                             @csrf
