@@ -9,10 +9,23 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+<<<<<<< HEAD
                     <div class="mb-4 flex justify-between items-center">
                         <div class="w-1/3">
                             <input type="text" id="searchInput" placeholder="Zoek op achternaam..." class="w-full px-4 py-2 border rounded-md">
                         </div>
+=======
+                    @if (session('success'))
+                        <div id="success-message" class="bg-green-500 text-white p-4 rounded-md mb-4">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    <div class="mb-4 flex justify-between items-center">
+                        <div class="w-1/3">
+                            <input type="text" id="searchInput" placeholder="Zoek op achternaam..." class="w-full px-4 py-2 border rounded-md">
+                        </div>
+>>>>>>> c387c2e77edf482a9b26a006fe040bb76bb55087
                         <a href="{{ route('admin.customers.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                             Nieuwe klant toevoegen
                         </a>

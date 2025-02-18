@@ -10,6 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
 
+<<<<<<< HEAD
                     <!-- Search Filter (on the left) -->
                     <div class="mb-4 flex justify-between items-center">
                         <div class="w-1/3">
@@ -19,6 +20,14 @@
                         <!-- Add Account Button (on the right) -->
                         <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
                             Add Account
+=======
+                    <div class="space-y-4">
+                        <a href="{{ route('admin.users') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                            Manage Users
+                        </a>
+                        <a href="{{ route('admin.customers.index') }}" class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600">
+                            Manage Customers
+>>>>>>> c387c2e77edf482a9b26a006fe040bb76bb55087
                         </a>
                     </div>
 
