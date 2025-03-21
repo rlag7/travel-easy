@@ -32,6 +32,9 @@ Route::get('/contact', function () {
 
 Route::get('/deals', [DealController::class, 'index'])->name('deals');
 
+Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
+
+
 
 
 

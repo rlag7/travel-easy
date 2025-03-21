@@ -31,8 +31,4 @@ class Communication extends Model
     {
         return $this->belongsTo(Customer::class, 'customer_id');
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> c387c2e77edf482a9b26a006fe040bb76bb55087
 }

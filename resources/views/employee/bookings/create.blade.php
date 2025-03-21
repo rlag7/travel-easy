@@ -7,14 +7,14 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-black-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <form action="{{ route('bookings.store') }}" method="POST">
                         @csrf
 
                         <div class="mb-4">
                             <label for="customer_id" class="block text-sm font-medium text-gray-700">Customer ID</label>
-                            <input type="number" id="customer_id" name="customer_id" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" required>
+                            <input type="number" id="customer_id" name="customer_id" class="mt-1 block w-full p-2 border border-black-300 rounded-md" required>
                             @error('customer_id')
                             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
                             @enderror
