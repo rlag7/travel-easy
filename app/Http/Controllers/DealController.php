@@ -23,4 +23,3 @@ class DealController extends Controller
         return view('deals', ['deals' => $deals->get()]);
     }
 }
-

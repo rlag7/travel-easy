@@ -39,7 +39,7 @@ class InvoiceController extends Controller
             'remarks' => 'nullable|string',
         ]);
 
-        // Find the booking ID based on the selected seat number
+        // Find the bookings ID based on the selected seat number
         $booking = Booking::where('seat_number', Str::upper($request->seat_number))->first();
 
         // Generate a random invoice number

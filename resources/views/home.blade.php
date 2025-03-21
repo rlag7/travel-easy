@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 <!DOCTYPE html>
@@ -25,15 +26,47 @@
 </head>
 <body class="bg-gray-100 text-gray-900">
     
+=======
+    <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>TravelEasy - Home</title>
+
+        <!-- Fonts & TailwindCSS -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+        <style>
+            body { font-family: 'Figtree', sans-serif; }
+            .primary-color { background-color: #0B4A88; }
+            .secondary-color { background-color: #24B4E2; }
+            .text-primary { color: #0B4A88; }
+            .text-secondary { color: #24B4E2; }
+        </style>
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
     <!-- Navbar -->
     <nav class="bg-white shadow-md py-4 relative">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="#" class="text-xl font-semibold text-primary">TravelEasy</a>
             <div class="hidden md:flex space-x-6 mx-auto">
+<<<<<<< HEAD
             <a href="{{ route('home') }}" class="text-gray-700 hover:text-primary">Home</a>
             <a href="{{ route('about') }}" class="text-gray-700 hover:text-primary">Over Ons</a>
             <a href="{{ route('deals') }}" class="text-gray-700 hover:text-primary">Aanbiedingen</a>
             <a href="{{ route('contact') }}" class="text-gray-700 hover:text-primary">Contact</a>
+=======
+                <a href="{{ route('home') }}" class="text-gray-700 hover:text-primary">Home</a>
+                <a href="{{ route('about') }}" class="text-gray-700 hover:text-primary">Over Ons</a>
+                <a href="{{ route('deals') }}" class="text-gray-700 hover:text-primary">Aanbiedingen</a>
+                <a href="{{ route('contact') }}" class="text-gray-700 hover:text-primary">Contact</a>
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
 
             </div>
             <div class="flex space-x-4">
@@ -54,15 +87,25 @@
             <a href="#contact" class="block text-gray-700 hover:text-primary py-2">Contact</a>
         </div>
     </nav>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
     <script>
         document.getElementById('menu-toggle').addEventListener('click', function() {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
+<<<<<<< HEAD
     
     <!-- Hero Section met achtergrondafbeelding en overlay -->
     <header class="relative bg-cover bg-center h-screen flex items-center justify-center text-white text-center" style="background-image: url('{{ asset('img/woman-traveler-on-the-paris-background-2023-11-27-05-28-45-utc.jpg') }}');"> 
+=======
+
+    <!-- Hero Section met achtergrondafbeelding en overlay -->
+    <header class="relative bg-cover bg-center h-screen flex items-center justify-center text-white text-center" style="background-image: url('{{ asset('img/woman-traveler-on-the-paris-background-2023-11-27-05-28-45-utc.jpg') }}');">
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="relative z-10 container mx-auto">
             <h1 class="text-4xl font-bold">Goedkoop en Snel Jouw Vliegtickets Boeken</h1>
@@ -70,7 +113,11 @@
             <a href="#deals" class="mt-6 inline-block px-6 py-3 bg-white text-primary font-semibold rounded-md hover:bg-gray-200">Bekijk Aanbiedingen</a>
         </div>
     </header>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
     <!-- Waarom TravelEasy? -->
     <section class="py-16 bg-white text-center">
         <div class="container mx-auto">
@@ -94,7 +141,11 @@
             </div>
         </div>
     </section>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
     <!-- Aanbiedingen Sectie -->
     <section id="deals" class="py-16 bg-gray-100 text-center">
         <div class="container mx-auto">
@@ -119,7 +170,11 @@
             <a href="#" class="mt-6 inline-block px-6 py-3 bg-primary text-white font-semibold rounded-md hover:bg-blue-800 transition mt-8">Bekijk Alle Deals</a>
         </div>
     </section>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
     <!-- Meest gestelde vragen -->
     <section id="faq" class="py-16 bg-white text-center">
         <div class="container mx-auto">
@@ -136,7 +191,11 @@
             </div>
         </div>
     </section>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
     <!-- Footer -->
     <footer id="contact" class="bg-gray-900 text-white py-6 text-center">
         <div class="container mx-auto">
@@ -148,6 +207,12 @@
             </div>
         </div>
     </footer>
+<<<<<<< HEAD
     
 </body>
 </html>
+=======
+
+    </body>
+    </html>
+>>>>>>> e771153c2d4d9e7c97b4733e57bc8c54e844ee65
